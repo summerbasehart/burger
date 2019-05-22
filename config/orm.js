@@ -13,11 +13,15 @@ module.exports = app => {
     })
     app.put('/burgers:id', (req, res) => {
         db.query('UPDATE burgers SET ? WHERE ?', [req.body, {
-            id:req.params.id
-        }
-        ])
+            id:req.params.id}], e => {
+                if (e) throw e
+                res.send('okay')
+            })
     })
     app.delete('/burgers:id', (req, res) => {
-        
+        db.query('DELETE FROM burgers WHERE ?', { id: req.params.id }, e => {
+            if (e) throw e
+            res.send('okay')
+        })
     })
 }
